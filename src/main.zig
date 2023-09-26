@@ -483,7 +483,7 @@ fn signedToFloat(comptime T: type, sample: anytype) T {
 }
 
 fn floatToSigned(comptime T: type, sample: f64) T {
-    return @intFromFloat(sample * std.math.maxInt(T));
+    return @truncate(std.math.clamp(@as(i32, @intFromFloat(sample * std.math.maxInt(T))), @as(i32, @intCast(std.math.minInt(T))), @as(i32, @intCast(std.math.maxInt(T)))));
 }
 
 fn floatToUnsigned(comptime T: type, sample: f64) T {
